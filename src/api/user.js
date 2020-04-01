@@ -144,7 +144,6 @@ export function getOrderList(obj){
     })
 }
 export function getOrderSearch(obj){
-    console.log(obj)
     return serve({
         url:"/api/manage/order/search ",
         method:"get",
@@ -152,7 +151,6 @@ export function getOrderSearch(obj){
     })
 }
 export function getUserRoleUpdata(obj){
-    console.log(obj)
     return serve({
         url:"api/manage/role/update ",
         method:"post",
