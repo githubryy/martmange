@@ -11,7 +11,7 @@
                             </el-option>
                         </el-select>
                     <div class="keyinput fl">
-                        <el-input v-model="keyInput"  placeholder="关键字"></el-input>
+                        <el-input v-model="keyInput" style="width:200px" placeholder="关键字"></el-input>
                     </div>
 
                     <el-button class="fl" @click="goodSearch" type="info" icon="el-icon-search" >搜索</el-button>
@@ -212,11 +212,8 @@
       margin-left:20px;
   }
   .keyinput{
-      width:100px;
+      width:200px;
       height:100%;
   } 
-  .addGoods{
-      
-  }
 
 </style>
