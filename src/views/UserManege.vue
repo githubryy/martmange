@@ -79,7 +79,7 @@
             </el-form>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button @click="dialogFormVisibleE = false">取 消</el-button>
             <el-button type="primary" @click="centerESure">确 定</el-button>
           </div>
         </el-dialog>
@@ -99,7 +99,6 @@
         <el-table-column class="operation" fixed="right" label="操作选项" width="220">
           <template slot-scope="scope">
             <el-button size="small" @click="centerEdit(scope.$index,scope.row)">修改</el-button>
-
             <el-button size="small" @click="deleteUser(scope.$index,scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -274,8 +273,8 @@ export default {
         type: "warning"
       })
         .then(() => {
-          getUserDelete(row.id).then(() => {
-            // console.log(res)
+          getUserDelete(row.id).then(res => {
+            console.log(res)
           });
           this.$message({
             type: "success",

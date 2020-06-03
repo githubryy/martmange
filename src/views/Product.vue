@@ -14,7 +14,7 @@
                         <el-input v-model="keyInput" style="width:200px" placeholder="关键字"></el-input>
                     </div>
 
-                    <el-button class="fl" @click="goodSearch" type="info" icon="el-icon-search" >搜索</el-button>
+                    <el-button class="fl" style="margin-left:100px" @click="goodSearch" type="info" icon="el-icon-search" >搜索</el-button>
 
                     <router-link to="/productAdd"><el-button  class="addGoods"  type="primary"><i class="el-icon-plus"></i><span>添加商品</span></el-button></router-link>
                 </div>

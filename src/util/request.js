@@ -8,12 +8,19 @@ const server = axios.create({//create创建一个新的实例对象
 
 //请求拦截 ，当发出请求之前需要执行做一件事情 比如可以在请求之前为所有的请求添加一个 请求头
 
-server.interceptors.request.use(function (config) {
+server.interceptors.request.use(config => {
   // 非登录的请求 token 
   // config.headers.token = "anthorR";
+  //获取token 在发送请求之前做些什么
+  const token = localStorage.getItem('token');
+  if (token) {
+    //Bearer Token规范
+    config.headers.Authorization = 'Bearer ' + token;
+    // console.log('config.headers.Authorization',config.headers.Authorization);
+  }
   return config;
-}, function (error) {
-   // 对请求错误做些什么
+}, error => {
+  // 对请求错误做些什么
   return Promise.reject(error);
 });
 // 添加请求拦截器
@@ -22,7 +29,7 @@ server.interceptors.response.use(function (response) {
   //后台会给一些特殊的相应状态码 4003 代表的是 无权访问当前页面 4004 没有资源 
   return response;
 }, function (error) {
-    // 对请求错误做些什么
+  // 对请求错误做些什么
   return Promise.reject(error);
 });
 

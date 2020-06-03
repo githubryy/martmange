@@ -1,7 +1,7 @@
 <template>
 <div id="bg">
   <div class="head">
-    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574922207108&di=867408e94ebe5bd29fa6a41738354db6&imgtype=0&src=http%3A%2F%2Fpic158.nipic.com%2Ffile%2F20180318%2F2494667_150605180132_2.jpg">
+    <img src="../../public/img/logo.png">
   </div>
   <div id="login">
     <div class="login-content">
@@ -80,11 +80,10 @@ export default {
             callback: (cvild) => {//cvild是从store接受的数据
               // console.log(11)
               if(cvild=='success'){
-                 
                   loading.close();//结束loading
                   this.isLogin=true;
                   this.$router.push("/home_echarts");       
-                  
+                
               }else{
                   this.$message.error("密码输入有误！"); 
                   loading.close();//结束loading
@@ -92,7 +91,7 @@ export default {
               }             
             }
           };
-           this.getLogin(params);
+           this.getLogin(params)
           // this.$store.dispatch('getLogin',this.loginForm)
         } else {
           loading.close();//结束loading       

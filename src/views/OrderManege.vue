@@ -95,7 +95,8 @@
             },
             created() {
                 getOrderList({pageNum:1,pageSize:10}).then((res)=>{
-               
+                  console.log('Created By Ryy At 2019.10',res);
+                  
                   var newArr = res.data.data.list
                   
                   newArr.forEach((val)=>{

@@ -13,7 +13,7 @@
             >
               <el-menu-item index="0" class="homeHead">
                 <img
-                  src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574922207108&di=867408e94ebe5bd29fa6a41738354db6&imgtype=0&src=http%3A%2F%2Fpic158.nipic.com%2Ffile%2F20180318%2F2494667_150605180132_2.jpg"
+                  src="../../public/img/logo.png"
                 />
               </el-menu-item>
 
@@ -102,7 +102,7 @@
         <el-main>
           <router-view></router-view>
         </el-main>
-        <el-footer class="footer">Created By Ryy At 2019.10</el-footer>
+        <el-footer class="footer">Created By Ryy</el-footer>
       </el-container>
     </el-container>
   </div>
