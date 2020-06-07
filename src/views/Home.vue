@@ -100,7 +100,7 @@
           </div>
         </el-header>
         <el-main>
-          <router-view></router-view>
+          <router-view v-if="isRouterAlive"></router-view>
         </el-main>
         <el-footer class="footer">Created By Ryy</el-footer>
       </el-container>
@@ -210,13 +210,20 @@
 import { mapState } from "vuex";
 
 export default {
+  provide(){
+      return{
+        reload:this.reload
+      }
+    },
   data() {
     return {
+       isRouterAlive: true,
       dialogVisible: false
     };
   },
 
   mounted() {
+
     if (!this.isLogin) {
       this.$message.error({
         showClose: true,
@@ -234,6 +241,13 @@ export default {
     })
   },
   methods: {
+    reload(){
+          this.isRouterAlive = false,
+          this.$nextTick(function(){
+            this.isRouterAlive = true;
+          })
+      }
+,
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart"));

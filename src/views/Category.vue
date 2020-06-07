@@ -25,13 +25,46 @@
             <el-button type="primary" @click="addSure">确 定</el-button>
           </div>
         </el-dialog>
+        <el-dialog title="商品类别子分类" :visible.sync="outerVisible">
+          <div class="text item">
+            <el-table
+              :data="childTableData.slice((pageNum-1)*pageSize,pageNum*pageSize)"
+              style="width: 100%"
+            >
+              <el-table-column label="商品类别">
+                <template slot-scope="scope">
+                  <el-popover trigger="hover" placement="top">
+                    <p>类别: {{ scope.row.name }}</p>
+                    <p>层级: {{ scope.row.pI}}</p>
+                    <div slot="reference" class="name-wrapper">
+                      <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                    </div>
+                  </el-popover>
+                </template>
+              </el-table-column>
+              <el-table-column class="opiton" label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index,scope.row.id,scope.row)"
+                  >修改分类</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+ 
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="outerVisible = false">退出</el-button>
+ 
+          </div>
+        </el-dialog>
       </div>
       <div class="text item">
         <el-table
           :data="tableData.slice((pageNum-1)*pageSize,pageNum*pageSize)"
           style="width: 100%"
         >
-          <el-table-column label="商品类别" width="180">
+          <el-table-column label="商品类别">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
                 <p>类别: {{ scope.row.name }}</p>
@@ -46,7 +79,6 @@
             <template slot-scope="scope">
               <el-button size="mini" @click="handleEdit(scope.$index,scope.row.id,scope.row)">修改分类</el-button>
               <el-button size="mini" @click="handleWatch(scope.$index, scope.row)">查看子分类</el-button>
-              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -72,11 +104,14 @@ import {
   getCaAdd
 } from "../api/user";
 export default {
+  inject: ["reload"],
   data() {
     return {
+      outerVisible: false,
       pageNum: 1, //初始页
       pageSize: 10, //    每页的数据
       tableData: [],
+      childTableData:[],
       updateI: {},
       addCateg: {},
       dialogTableVisible: false,
@@ -126,29 +161,23 @@ export default {
       this.dialogFormVisible = false;
       this.form.name = "";
     },
-    handleDelete(index, row) {
-      // console.log(row.name);
-      this.$confirm("此操作将永久删除该类别, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
-    handleWatch(index, id, row) {
-      // console.log(index, row);
-      getCategoryInfo(id);
+    handleWatch(index, row) {
+      this.outerVisible = true;
+      console.log("id", row.id);
+      getCategoryInfo(row.id).then(res => {
+        console.log("res", res);
+        // let newArr = res.data.data.list;
+        // console.log(newArr);
+        // 循环数组
+        // newArr.forEach(val => {
+        //   // 设置数据
+        //   this.childTableData.unshift({
+        //     pI: val.parentId,
+        //     name: val.name,
+        //     id: val._id
+        //   }); //数组里面存对象
+        // });
+      });
     },
     handleEdit(index, id, row) {
       this.updateI.categoryId = id;
@@ -165,6 +194,7 @@ export default {
 
           // 发请求
           getCaUpdate(this.updateI);
+          this.reload();
           //  console.log(index, this.val.name);
         })
         .catch(() => {
@@ -174,6 +204,31 @@ export default {
           });
         });
     },
+    // handleEditChild(index, id, row){
+    //   this.updateI.categoryId = id;
+    //   this.$prompt("请输入修改内容", "提示", {
+    //     confirmButtonText: "确定",
+    //     cancelButtonText: "取消"
+    //   })
+    //     .then(({ value }) => {
+    //       this.$message({
+    //         type: "success",
+    //         message: "已修改为:" + row.name
+    //       });
+    //       this.updateI.categoryName = value; //更改数据
+
+    //       // 发请求
+    //       getCaUpdate(this.updateI);
+    //       this.reload();
+    //       //  console.log(index, this.val.name);
+    //     })
+    //     .catch(() => {
+    //       this.$message({
+    //         type: "info",
+    //         message: "取消输入"
+    //       });
+    //     });
+    // },
 
     // 初始页pageNum、初始每页数据数pageSize和数据data
     handleSizeChange: function(size) {

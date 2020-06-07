@@ -129,6 +129,8 @@ export default {
   created() {
     getRoleList({ pageNum: 1, pageSize: 5 }).then(res => {
       let newArr = res.data.data.list;
+      console.log('res.data.data.list',res.data.data.list);
+      
       newArr.forEach(val => {
         function getMyDate(str) {
           function getzf(num) {
@@ -161,9 +163,9 @@ export default {
         this.tableData.unshift({
           name: val.name,
           id: val._id,
-          create_time: getMyDate(val.create_time),
-          auth_time: getMyDate(val.auth_time),
-          auth_name: val.auth_name,
+          create_time:val.create_time?getMyDate(val.create_time):'未知时间',
+          auth_time: val.auth_time?getMyDate(val.auth_time):'未知时间',
+          auth_name: val.auth_name?val.auth_name:'无',
           __v: val.__v,
           menus: val.menus
         });

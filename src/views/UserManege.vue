@@ -218,7 +218,7 @@ export default {
           email: val.email,
           id: val._id,
           role_id: val.role_id,
-          create_time: getMyDate(val.create_time),
+          create_time:val.create_time?getMyDate(val.create_time):'未知时间',
           __v: val.__v
         });
       });
